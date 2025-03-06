@@ -1,4 +1,4 @@
 falcon
 pymongo
-gunicorn
+uvicorn
 requests

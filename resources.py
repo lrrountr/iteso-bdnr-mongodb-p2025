@@ -37,7 +37,6 @@ class BooksResource:
         if rating is not None:
             query['average_rating'] = {'$gte': rating}
 
-        print(query)
         books = self.db.books.find(query)
         books_list = []
         for book in books:

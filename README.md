@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ### To run the API service
 ```
-python3 -m gunicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
 
 ### To load data
