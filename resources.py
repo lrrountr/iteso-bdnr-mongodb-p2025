@@ -7,7 +7,7 @@ class BookResource:
     def __init__(self, db):
         self.db = db
 
-    def on_get(self, req, resp, book_id):
+    async def on_get(self, req, resp, book_id):
         """Handles GET requests to retrieve a single book"""
         book = self.db.books.find_one({'_id': ObjectId(book_id)})
         if book:
@@ -17,11 +17,11 @@ class BookResource:
         else:
             resp.status = falcon.HTTP_404
 
-    def on_put(self, req, resp, book_id):
+    async def on_put(self, req, resp, book_id):
         """Handles PUT requests to update a single book"""
         pass
 
-    def on_delete(self, req, resp, book_id):
+    async def on_delete(self, req, resp, book_id):
         """Handles DELETE requests to delete a single book"""
         pass
 
@@ -30,7 +30,7 @@ class BooksResource:
     def __init__(self, db):
         self.db = db
 
-    def on_get(self, req, resp):
+    async def on_get(self, req, resp):
         """Handles GET requests to retrieve all books"""
         rating = req.get_param_as_float('rating')
         query = {}
@@ -45,9 +45,9 @@ class BooksResource:
         resp.media = books_list
         resp.status = falcon.HTTP_200
 
-    def on_post(self, req, resp):
+    async def on_post(self, req, resp):
         """Handles POST requests to add a new book"""
-        data = req.media
+        data = await req.media
         data = validate_book_data(data)
         result = self.db.books.insert_one(data)
         data['_id'] = str(result.inserted_id)
